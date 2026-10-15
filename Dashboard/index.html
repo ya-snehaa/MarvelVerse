@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marvelverse Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <a href="#" class="brand" aria-label="Marvelverse dashboard home">
+      <span class="brand-mark">M</span>
+      <span>MARVEL<b>VERSE</b></span>
+    </a>
+
+    <nav class="side-nav" aria-label="Dashboard sections">
+      <button class="nav-btn profile-nav" data-section="profile" aria-label="Profile settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.8-4.2 5-6 8-6s6.2 1.8 8 6"></path></svg>
+        <span>Profile</span>
+      </button>
+      <button class="nav-btn active" data-section="overview">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4v9Z"></path><path d="M14 20h6V4h-6v16Z"></path><path d="M4 20h6v-3H4v3Z"></path></svg>
+        <span>Overview</span>
+      </button>
+      <button class="nav-btn" data-section="fitness">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3"></path><path d="M18 12h3"></path><path d="M6 9v6"></path><path d="M18 9v6"></path><path d="M9 12h6"></path><path d="M9 8v8"></path><path d="M15 8v8"></path></svg>
+        <span>Fitness</span>
+      </button>
+      <button class="nav-btn" data-section="sleep">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 7 7 0 1 0 20 15.5Z"></path><path d="M16 3h4"></path><path d="M18 1v4"></path></svg>
+        <span>Sleep</span>
+      </button>
+      <button class="nav-btn" data-section="mood">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><path d="M9 9h.01"></path><path d="M15 9h.01"></path></svg>
+        <span>Mood</span>
+      </button>
+      <button class="nav-btn" data-section="nutrition">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10"></path><path d="M8 3l1 6h6l1-6"></path><path d="M9 9h6l-1 12h-4L9 9Z"></path><path d="M10 14h4"></path></svg>
+        <span>Nutrition</span>
+      </button>
+      <button class="nav-btn" data-section="health">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h6"></path><path d="M12 21C7 16.5 4 13.5 4 9.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 3.5c0 4-3 7-8 11.5Z" opacity=".35"></path></svg>
+        <span>Health</span>
+      </button>
+      <button class="nav-btn" data-section="goals">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5"></circle><path d="M12 3v3"></path><path d="M12 18v3"></path><path d="M3 12h3"></path><path d="M18 12h3"></path></svg>
+        <span>Goals</span>
+      </button>
+      <button class="nav-btn" data-section="calendar">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path></svg>
+        <span>Calendar</span>
+      </button>
+    </nav>
+
+    <button class="logout-btn" onclick="window.location.href='/Landing Page/login.html'">
+  Logout
+</button>
+
+  </aside>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+      <div>
+        <p class="eyebrow">// Personal Wellness Dashboard</p>
+        <h1>Welcome Back, <span id="userNameDisplay">User Name</span></h1>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="profileBtn" title="Profile" aria-label="Open profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.8-4.2 5-6 8-6s6.2 1.8 8 6"></path></svg></button>
+        <button class="ghost-btn" id="themeBtn">Toggle Theme</button>
+        <button class="danger-btn" id="resetBtn">Reset Data</button>
+      </div>
+    </header>
+
+    <section class="section active" id="overview">
+      <div class="cards-grid">
+        <article class="stat-card stat-steps">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 14.5c2.8 1.5 5.9 2.4 9.1 2.7l3.7.3c1.2.1 2.2 1.1 2.2 2.3v.2H8.3c-2.6 0-4.8-1.8-5.4-4.3l-.4-1.6 2 .4Z"></path><path d="M6.5 14.8l2-5.8 2.4 2.9 2.2-5.8 3.2 5.1 2.3 1.4"></path><path d="M8.8 17.1l1.1-2.6"></path></svg></div>
+          <div><span>Steps</span><strong id="stepsStat">0</strong><small>daily movement</small></div>
+        </article>
+        <article class="stat-card stat-calories">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c4.2 0 7-2.9 7-6.9 0-3.2-1.8-5.5-4.8-8.6-.4 2.2-1.5 3.5-3 4.5.3-2.9-.7-5-3.2-7.8C7.5 7.2 5 9.9 5 15.1 5 19.1 7.8 22 12 22Z"></path><path d="M12 19c1.8 0 3-1.2 3-3 0-1.4-.8-2.5-2.2-3.8-.2 1-.7 1.6-1.5 2.1.1-1.3-.3-2.2-1.3-3.4-.4 1.8-1 3-1 5.1 0 1.8 1.2 3 3 3Z"></path></svg></div>
+          <div><span>Calories</span><strong id="calStat">0</strong><small>burned today</small></div>
+        </article>
+        <article class="stat-card stat-sleep">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 15.7A8.5 8.5 0 1 1 8.3 3.7a7 7 0 0 0 12 12Z"></path><path d="M17 4h3"></path><path d="M18.5 2.5v3"></path></svg></div>
+          <div><span>Sleep</span><strong id="sleepStat">0h</strong><small>last night</small></div>
+        </article>
+        <article class="stat-card stat-mood">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 14s1.4 2 4 2 4-2 4-2"></path><path d="M9 9h.01"></path><path d="M15 9h.01"></path></svg></div>
+          <div><span>Mood</span><strong id="moodStat">0/10</strong><small>mental status</small></div>
+        </article>
+      </div>
+
+      <div class="two-col">
+        <article class="panel streak-tracker-panel">
+          <div class="panel-head"><h3>Streak Tracker</h3></div>
+          <div class="streak-hero-icon" aria-hidden="true"></div>
+          <h4>Keep Building, Hero!</h4>
+          <p>Consistency today, strength forever.</p>
+          <div class="streak-card-layout">
+            <div class="streak-info-box streak-best-box"><small>Best Streak</small><strong id="bestStreakStat">0</strong><em>days</em></div>
+            <div class="streak-ring"><div><strong id="mainStreakCount">0</strong><span>Days</span><small>Current Streak</small></div></div>
+            <div class="streak-info-box streak-date-box"><small id="currentDayLabel">Today</small><strong id="currentDateLabel">--</strong><em id="currentMonthLabel">--</em></div>
+          </div>
+          <div class="streak-week" id="streakWeek"></div>
+          <div class="streak-legend"><span><i class="done-dot"></i>Completed</span><span><i></i>Missed</span><span><i class="today-dot"></i>Today</span></div>
+        </article>
+        <article class="panel quote-panel">
+          <div class="panel-head"><h3>Daily Hero Boost</h3><button id="quoteBtn" class="mini-btn">New Boost</button></div>
+          <blockquote id="quoteText">Loading your hero boost...</blockquote>
+          <p id="quoteAuthor"></p>
+          <small id="fetchStatus">Finding a fresh quote for you.</small>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="fitness">
+      <article class="panel">
+        <div class="panel-head"><h3>Log Fitness</h3><span class="pill">Progress tracker</span></div>
+        <form id="fitnessForm" class="input-grid">
+          <label>Steps <input id="stepsInput" type="number" min="0" placeholder="8500" required></label>
+          <label>Calories <input id="caloriesInput" type="number" min="0" placeholder="420" required></label>
+          <label>Workout <input id="workoutInput" type="text" placeholder="Strength training" required></label>
+          <button class="red-btn" type="submit">Add Fitness Log</button>
+        </form>
+      </article>
+      <article class="panel"><h3>Fitness Logs</h3><div id="fitnessList" class="log-list"></div></article>
+    </section>
+
+    <section class="section" id="sleep">
+      <article class="panel">
+        <div class="panel-head"><h3>Sleep Monitor</h3><span class="pill">Sleep insights</span></div>
+        <form id="sleepForm" class="input-grid three">
+          <label>Hours <input id="sleepHours" type="number" min="0" max="14" step="0.5" placeholder="7.5" required></label>
+          <label>Quality <select id="sleepQuality"><option>Excellent</option><option>Good</option><option>Okay</option><option>Poor</option></select></label>
+          <button class="red-btn" type="submit">Save Sleep</button>
+        </form>
+      </article>
+      <article class="panel"><h3>Sleep History</h3><div id="sleepList" class="log-list"></div></article>
+    </section>
+
+    <section class="section" id="mood">
+      <article class="panel">
+        <div class="panel-head"><h3>Mood & Journal</h3><span class="pill">Interactive tracker</span></div>
+        <form id="moodForm" class="mood-form">
+          <div class="mood-preview" aria-live="polite">
+            <div id="moodEmoji" class="mood-emoji">🙂</div>
+            <div>
+              <span id="moodText" class="mood-text">Steady</span>
+              <label>Mood score: <strong id="moodValue">7</strong>/10
+                <input id="moodRange" type="range" min="1" max="10" value="7">
+              </label>
+            </div>
+          </div>
+          <textarea id="journalInput" placeholder="Write a quick journal note..." required></textarea>
+          <button class="red-btn" type="submit">Save Mood</button>
+        </form>
+      </article>
+      <article class="panel"><h3>Journal Entries</h3><div id="moodList" class="log-list"></div></article>
+    </section>
+
+    <section class="section" id="nutrition">
+      <article class="panel">
+        <div class="panel-head"><h3>Hydration & Nutrition</h3><span class="pill">Hydration tracker</span></div>
+        <div class="water-area">
+          <button id="waterMinus" class="ghost-btn">−</button>
+          <div><strong id="waterCount">0</strong><span> / 8 glasses</span></div>
+          <button id="waterPlus" class="red-btn">+</button>
+        </div>
+        <div class="water-dots" id="waterDots"></div>
+      </article>
+      <article class="panel">
+        <form id="mealForm" class="input-grid three">
+          <label>Meal <input id="mealName" type="text" placeholder="Protein bowl" required></label>
+          <label>Protein (g) <input id="proteinInput" type="number" min="0" placeholder="35" required></label>
+          <button class="red-btn" type="submit">Add Meal</button>
+        </form>
+        <div id="mealList" class="log-list"></div>
+      </article>
+    </section>
+
+    <section class="section" id="health">
+      <article class="panel">
+        <div class="panel-head"><h3>Health Vitals</h3><span class="pill">BMI • Heart • Blood pressure</span></div>
+        <form id="healthForm" class="input-grid">
+          <label>Height (cm) <input id="heightInput" type="number" min="50" max="260" placeholder="165" required></label>
+          <label>Weight (kg) <input id="weightInput" type="number" min="20" max="300" placeholder="60" required></label>
+          <label>Heart Rate <input id="heartInput" type="number" min="30" max="220" placeholder="78" required></label>
+          <label>Blood Pressure <input id="bpInput" type="text" placeholder="120/80" required></label>
+          <button class="red-btn" type="submit">Save Vitals</button>
+        </form>
+      </article>
+      <div class="cards-grid health-summary">
+        <article class="stat-card"><span>BMI</span><strong id="bmiStat">0</strong><small id="bmiStatus">add vitals</small></article>
+        <article class="stat-card"><span>Heart Rate</span><strong id="heartStat">0</strong><small>bpm</small></article>
+        <article class="stat-card"><span>Blood Pressure</span><strong id="bpStat">--/--</strong><small>latest reading</small></article>
+        <article class="stat-card"><span>Logs</span><strong id="healthLogCount">0</strong><small>vital records</small></article>
+      </div>
+      <article class="panel"><h3>Vitals History</h3><div id="healthList" class="log-list"></div></article>
+    </section>
+
+
+
+    <section class="section" id="calendar">
+      <article class="panel">
+        <div class="panel-head calendar-head">
+          <button id="prevMonth" class="mini-btn" type="button">Previous</button>
+          <h3 id="calendarTitle">Daily Data Calendar</h3>
+          <button id="todayMonth" class="mini-btn" type="button">Today</button><button id="nextMonth" class="mini-btn" type="button">Next</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h3 id="selectedDateTitle">Selected Day</h3><span class="pill">date-wise summary</span></div>
+        <div id="dailySummary" class="daily-summary"></div>
+      </article>
+    </section>
+
+    <section class="section" id="profile">
+      <article class="panel profile-panel">
+        <div class="panel-head"><h3>Profile Settings</h3><span class="pill">user details</span></div>
+        <form id="profileForm" class="profile-form full">
+          <label>User name <input id="nameInput" type="text" placeholder="User Name" maxlength="24" required></label>
+          <label>Email <input id="emailInput" type="email" placeholder="user@example.com"></label>
+          <button type="submit" class="red-btn">Save Profile</button>
+        </form>
+        <p class="profile-note">Your profile details are saved in this browser for this app demo.</p>
+      </article>
+    </section>
+
+    <section class="section" id="goals">
+      <article class="panel">
+        <div class="panel-head"><h3>Mission Goals</h3><span class="pill">Create / complete / delete</span></div>
+        <form id="goalForm" class="goal-form">
+          <input id="goalInput" type="text" placeholder="Run 5 km, meditate, drink water..." required>
+          <button class="red-btn" type="submit">Add Goal</button>
+        </form>
+        <div id="goalList" class="goal-list"></div>
+      </article>
+    </section>
+  </main>
+
+  <template id="emptyTemplate">
+    <p class="empty">No logs yet. Add your first one.</p>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvelverse</title>
+    <link rel="icon" type="image/x-icon" href="Images/LOGO.png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-color: #050505;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- BACKGROUND CONTAINER --- */
+        .bg-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        /* --- CAROUSEL --- */
+        .carousel {
+            height: 25vh;
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+            border-bottom: 1px solid #222;
+        }
+
+        .group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-right: 20px;
+            width: max-content;
+        }
+
+        .card {
+            flex: 0 0 300px;
+            height: 180px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #333;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .carousel:hover .card { filter: grayscale(0%); }
+
+        .scroll-left .group  { animation: scrollLeft 30s linear infinite; }
+        .scroll-right .group { animation: scrollRight 35s linear infinite; }
+
+        @keyframes scrollLeft  { from { transform: translateX(0); }    to { transform: translateX(-100%); } }
+        @keyframes scrollRight { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+        /* --- FORM WRAPPER --- */
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            background: rgba(0,0,0,0.85);
+            width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+            color: white;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background-color 0.4s ease;
+        }
+
+        .login-wrapper:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(237, 29, 36, 0.6);
+            background-color: rgba(0,0,0,0.95);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px rgba(237,29,36,0.3);
+        }
+
+        .login-wrapper h2 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* LOGO — static, no hover effects */
+        .marvel-logo {
+            background: #ed1d24;
+            color: white;
+            padding: 5px 12px;
+            display: inline-block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-top: 5px;
+            margin-bottom: 25px;
+            cursor: default;
+        }
+
+        /* --- INPUTS --- */
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        /* Sign-up-only fields: hidden by default, animate in */
+        .signup-only {
+            display: none;
+            opacity: 0;
+        }
+
+        .signup-only.visible {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            outline: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ed1d24;
+            background: #2a2a2a;
+            box-shadow: 0 0 8px rgba(237,29,36,0.4);
+        }
+
+        .input-group input.invalid {
+            border-color: #ff4d4d;
+            background: #2a1a1a;
+        }
+
+        .input-group input.valid {
+            border-color: #3ddc84;
+        }
+
+        .error-msg {
+            display: none;
+            color: #ff6b6b;
+            font-size: 0.78rem;
+            margin-top: 5px;
+            padding-left: 2px;
+        }
+
+        .error-msg.show { display: block; }
+
+        /* --- BUTTON --- */
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #ed1d24;
+            color: white;
+            border: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 4px;
+        }
+
+        .login-btn:hover {
+            background: #ff2f37;
+            box-shadow: 0 0 15px rgba(237,29,36,0.6);
+            transform: translateY(-2px);
+        }
+
+        /* --- TOGGLE LINK --- */
+        .switch-text {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .switch-link {
+            color: #ed1d24;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+
+        .switch-link:hover { color: white; }
+
+        .footer-text {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="carousel scroll-left">
+            <div class="group">
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/2.jpg')"></div>
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+                <div class="card" style="background-image: url('Images/5.jpg')"></div>
+                <div class="card" style="background-image: url('Images/6.jpg')"></div>
+            </div>
+            <div class="group" aria-hidden="true">
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/2.jpg')"></div>
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+                <div class="card" style="background-image: url('Images/5.jpg')"></div>
+                <div class="card" style="background-image: url('Images/6.jpg')"></div>
+            </div>
+        </div>
+
+        <div class="carousel scroll-right">
+            <div class="group">
+                <div class="card" style="background-image: url('Images/7.jpg')"></div>
+                <div class="card" style="background-image: url('Images/8.jpg')"></div>
+                <div class="card" style="background-image: url('Images/9.jpg')"></div>
+                <div class="card" style="background-image: url('Images/10.jpg')"></div>
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('2.jpg')"></div>
+            </div>
+            <div class="group" aria-hidden="true">
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/8.jpg')"></div>
+                <div class="card" style="background-image: url('Images/9.jpg')"></div>
+                <div class="card" style="background-image: url('Images/10.jpg')"></div>
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/2.jpg')"></div>
+            </div>
+        </div>
+
+        <div class="carousel scroll-left">
+            <div class="group">
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+                <div class="card" style="background-image: url('Images/5.jpg')"></div>
+                <div class="card" style="background-image: url('Images/6.jpg')"></div>
+                <div class="card" style="background-image: url('Images/7.jpg')"></div>
+                <div class="card" style="background-image: url('Images/8.jpg')"></div>
+            </div>
+            <div class="group" aria-hidden="true">
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+                <div class="card" style="background-image: url('Images/5.jpg')"></div>
+                <div class="card" style="background-image: url('Images/6.jpg')"></div>
+                <div class="card" style="background-image: url('Images/7.jpg')"></div>
+                <div class="card" style="background-image: url('Images/8.jpg')"></div>
+            </div>
+        </div>
+
+        <div class="carousel scroll-right">
+            <div class="group">
+                <div class="card" style="background-image: url('Images/9.jpg')"></div>
+                <div class="card" style="background-image: url('Images/10.jpg')"></div>
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/2.jpg')"></div>
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+            </div>
+            <div class="group" aria-hidden="true">
+                <div class="card" style="background-image: url('Images/9.jpg')"></div>
+                <div class="card" style="background-image: url('Images/10.jpg')"></div>
+                <div class="card" style="background-image: url('Images/1.jpg')"></div>
+                <div class="card" style="background-image: url('Images/2.jpg')"></div>
+                <div class="card" style="background-image: url('Images/3.jpg')"></div>
+                <div class="card" style="background-image: url('Images/4.jpg')"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login / Signup Box -->
+    <div class="login-wrapper">
+        <h2 id="welcome-text">Welcome to</h2>
+        <h2><span class="marvel-logo">MARVELVERSE</span></h2>
+
+        <form id="authForm" action="index.html" method="GET" novalidate>
+
+            <!-- Username — always shown -->
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" autocomplete="username">
+                <span class="error-msg" id="username-error">Username must be at least 3 characters.</span>
+            </div>
+
+            <!-- Email — always shown -->
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email Address" autocomplete="email">
+                <span class="error-msg" id="email-error">Please enter a valid email address.</span>
+            </div>
+
+            <!-- Password — always shown -->
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+                <span class="error-msg" id="password-error">Password must be at least 6 characters.</span>
+            </div>
+
+            <!-- Confirm Password — sign-up only -->
+            <div class="input-group signup-only" id="confirm-group">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" autocomplete="new-password">
+                <span class="error-msg" id="confirm-error">Passwords do not match.</span>
+            </div>
+
+            <button type="submit" class="login-btn" id="submit-btn">LOGIN</button>
+
+            <div class="switch-text">
+                <span id="prompt-text">New here?</span>
+                <span class="switch-link" id="toggle-link" onclick="toggleForm()">Sign Up</span>
+            </div>
+
+            <div class="footer-text">&copy; Sneha</div>
+        </form>
+    </div>
+
+    <script>
+        let isLogin = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        /* ---- Validation helper ---- */
+        function validate(input, errorId, condition) {
+            const error = document.getElementById(errorId);
+            if (!condition) {
+                input.classList.add('invalid');
+                input.classList.remove('valid');
+                error.classList.add('show');
+                return false;
+            }
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+            error.classList.remove('show');
+            return true;
+        }
+
+        function clearField(input, errorId) {
+            input.classList.remove('valid', 'invalid');
+            document.getElementById(errorId).classList.remove('show');
+        }
+
+        /* ---- Live blur validation ---- */
+        document.getElementById('username').addEventListener('blur', function () {
+            validate(this, 'username-error', this.value.trim().length >= 3);
+        });
+
+        document.getElementById('email').addEventListener('blur', function () {
+            validate(this, 'email-error', emailRegex.test(this.value.trim()));
+        });
+
+        document.getElementById('password').addEventListener('blur', function () {
+            validate(this, 'password-error', this.value.length >= 6);
+        });
+
+        document.getElementById('confirmPassword').addEventListener('blur', function () {
+            if (!isLogin) {
+                const pw = document.getElementById('password').value;
+                validate(this, 'confirm-error', this.value === pw && this.value.length > 0);
+            }
+        });
+
+        /* ---- Toggle Login / Sign Up ---- */
+        function toggleForm() {
+            isLogin = !isLogin;
+
+            const welcomeText  = document.getElementById('welcome-text');
+            const submitBtn    = document.getElementById('submit-btn');
+            const promptText   = document.getElementById('prompt-text');
+            const toggleLink   = document.getElementById('toggle-link');
+            const confirmGroup = document.getElementById('confirm-group');
+
+            // Reset all validation states on toggle
+            ['username','email','password','confirmPassword'].forEach(id => {
+                const el = document.getElementById(id);
+                clearField(el, id === 'confirmPassword' ? 'confirm-error' :
+                               id + '-error');
+                el.value = '';
+            });
+
+            if (!isLogin) {
+                welcomeText.innerText  = 'Join the Universe';
+                submitBtn.innerText    = 'SIGN UP';
+                promptText.innerText   = 'Already an agent?';
+                toggleLink.innerText   = 'Login';
+                confirmGroup.classList.add('visible');
+            } else {
+                welcomeText.innerText  = 'Welcome to';
+                submitBtn.innerText    = 'LOGIN';
+                promptText.innerText   = 'New here?';
+                toggleLink.innerText   = 'Sign Up';
+                confirmGroup.classList.remove('visible');
+            }
+        }
+
+        /* ---- Submit validation ---- */
+        document.getElementById('authForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const u   = document.getElementById('username');
+            const em  = document.getElementById('email');
+            const p   = document.getElementById('password');
+            const cp  = document.getElementById('confirmPassword');
+
+            const checks = [
+                validate(u,  'username-error', u.value.trim().length >= 3),
+                validate(em, 'email-error',    emailRegex.test(em.value.trim())),
+                validate(p,  'password-error', p.value.length >= 6)
+            ];
+
+            if (!isLogin) {
+                checks.push(validate(cp, 'confirm-error', cp.value === p.value && cp.value.length > 0));
+            }
+
+            if (checks.every(Boolean)) this.submit();
+        });
+    </script>
+
+</body>
+</html>
